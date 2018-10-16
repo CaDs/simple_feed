@@ -37,5 +37,4 @@ test:
 production:
   <<: *default
   url: <%= ENV['JAWSDB_URL'] %>
-  database: simple_feed_production
   pool: 50
