@@ -1,0 +1,8 @@
+<% @users.each do |user| %>
+  <% next if user.id == session[:user_id] %>
+  <p>
+  <%= user.username || user.email %>
+  <%= link_to 'Follow', connections_url(following_id: user.id), method: :post %>
+  <%= link_to 'Unfollow', connection_url(user.id), method: :delete %>
+</p>
+<% end %>

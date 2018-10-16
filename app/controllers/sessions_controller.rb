@@ -1,12 +1,7 @@
 class SessionsController < ApplicationController
 
-  # GET /sessions/new
-  def new
-  end
+  def new; end
 
-
-  # POST /sessions
-  # POST /sessions.json
   def create
     puts session_params
     user = User.find_by(email: session_params[:email], password: session_params[:password])
@@ -16,19 +11,13 @@ class SessionsController < ApplicationController
     redirect_to posts_path
   end
 
-  # DELETE /sessions/1
-  # DELETE /sessions/1.json
   def destroy
-    @session.destroy
-    respond_to do |format|
-      format.html { redirect_to sessions_url, notice: 'Session was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    session[:user_id] = nil
+    redirect_to new_session_path
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def session_params
-      params.fetch(:session, {})
-    end
+  def session_params
+    params.fetch(:session, {})
+  end
 end

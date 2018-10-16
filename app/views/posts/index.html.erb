@@ -13,10 +13,15 @@
     <% @posts.each_with_index do |post, index| %>
       <% bg_color = index.even? ? 'lightgray' : 'white'%>
       <tr bgcolor="<%=bg_color%>" >
-        <td><%= post.message %></td>
-      </tr>
-      <tr>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } if post.user_id == @user.id %></td>
+        <td>
+          <%= "#{post.user.username || post.user.email} said:" %>
+          <br>
+          <%= post.message %>
+          <br>
+          <%= "#{time_ago_in_words(post.created_at)} ago" %>
+          <br>
+          <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } if post.user_id == @user.id %>
+        </td>
       </tr>
     <% end %>
   </tbody>

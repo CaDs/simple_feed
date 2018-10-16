@@ -11,6 +11,6 @@ class User < ApplicationRecord
   has_many :following_posts, through: :following, source: :post
 
   def fetch_feed
-    Post.where(user: self.following + [self]).order('created_at DESC')
+    Post.eager_load(:user).where(user: self.following + [self]).order('posts.created_at DESC')
   end
 end
