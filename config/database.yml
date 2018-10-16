@@ -36,5 +36,6 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['JAWSDB_URL'] %>
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
   pool: 50
