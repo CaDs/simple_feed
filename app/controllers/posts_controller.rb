@@ -57,7 +57,8 @@ class PostsController < ApplicationController
     end
 
     def auth_user
-      redirect_to new_session_path unless session[:user_id]
+      return redirect_to new_session_url unless session[:user_id].present?
+
       @user = User.find(session[:user_id])
     end
 end
