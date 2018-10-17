@@ -8,9 +8,9 @@ class User < ApplicationRecord
   has_many :following_connections, foreign_key: :follower_id, class_name: 'Connection'
   has_many :following, through: :following_connections, source: :following
 
-  has_many :following_posts, through: :following, source: :post
-
   def fetch_feed
-    Post.eager_load(:user).where(user: self.following + [self]).order('posts.created_at DESC')
+    Post.eager_load(:user)
+        .where(user: self.following + [self])
+        .order('posts.created_at DESC')
   end
 end

@@ -3,9 +3,8 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    puts session_params
     user = User.find_by(email: session_params[:email], password: session_params[:password])
-    redirect_to :new unless user
+    return redirect_to new_session_path unless user
 
     session[:user_id] = user.id
     redirect_to posts_path
