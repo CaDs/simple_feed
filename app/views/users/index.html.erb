@@ -1,8 +1,15 @@
-<% @users.each do |user| %>
-  <% next if user.id == session[:user_id] %>
-  <p>
-  <%= user.username || user.email %>
-  <%= link_to 'Follow', connections_url(following_id: user.id), method: :post %>
-  <%= link_to 'Unfollow', connection_url(user.id), method: :delete %>
-</p>
+<% @users.each_with_index do |user, index| %>
+<% next if user.id == session[:user_id] %>
+<% css_class = index.even? ? 'direction-r' : 'direction-l'%>
+<li>
+  <div class="<%=css_class%>">
+    <div class="flag-wrapper">
+      <span class="flag"><%= user.username || user.email %></span>
+    </div>
+    <div class="desc">
+      <%= link_to 'Follow', connections_url(following_id: user.id), method: :post %>
+      <%= link_to 'Unfollow', connection_url(user.id), method: :delete %>
+    </div>
+  </div>
+</li>
 <% end %>
