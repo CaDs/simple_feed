@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = @user.fetch_feed
+    @posts = @user.fetch_cached_feed
   end
 
   def show
