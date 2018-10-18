@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConnectionsController < ApplicationController
   before_action :auth_user
 
@@ -6,7 +8,7 @@ class ConnectionsController < ApplicationController
       follower_id: session[:user_id],
       following_id: params[:following_id]
     )
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error(e.message)
   ensure
     redirect_to posts_url
@@ -17,7 +19,7 @@ class ConnectionsController < ApplicationController
       follower_id: session[:user_id],
       following_id: params[:id]
     )&.destroy
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error(e.message)
   ensure
     redirect_to posts_url

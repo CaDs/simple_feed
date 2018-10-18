@@ -1,5 +1,6 @@
-class SessionsController < ApplicationController
+# frozen_string_literal: true
 
+class SessionsController < ApplicationController
   def new; end
 
   def create
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
   end
 
   private
+
   def session_params
     params.fetch(:session, {})
   end

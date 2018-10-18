@@ -16,11 +16,11 @@ class Post < ApplicationRecord
   end
 
   def enqueue_delivery
-    PostDeliveryJob.perform_async(post_id: self.id)
+    PostDeliveryJob.perform_async(post_id: id)
   end
 
   def deliver_to_followers
-    recipients = user.followers + [self.user]
+    recipients = user.followers + [user]
     recipients.each do |follower|
       follower.add_to_cache(post: self)
     end

@@ -12,17 +12,17 @@ class User < ApplicationRecord
 
   def fetch_feed
     Post.eager_load(:user)
-        .where(user: self.following + [self])
+        .where(user: following + [self])
         .order('posts.created_at DESC')
   end
 
   def add_to_cache(post:)
-    redis.zadd(self.cache_key, post.created_at.to_i, post.id)
+    redis.zadd(cache_key, post.created_at.to_i, post.id)
   end
 
   def fetch_cached_feed
-    cache_keys = redis.zrevrange(self.cache_key, 0, -1)
-                      .map{ |id| Post.cache_key_for(id: id) }
+    cache_keys = redis.zrevrange(cache_key, 0, -1)
+                      .map { |id| Post.cache_key_for(id: id) }
 
     return [] unless cache_keys.any?
 
@@ -34,6 +34,6 @@ class User < ApplicationRecord
   private
 
   def redis
-    @redis ||= Redis.new url: ENV["REDIS_URL"]
+    @redis ||= Redis.new url: ENV['REDIS_URL']
   end
 end
